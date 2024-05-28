@@ -15,6 +15,15 @@ Inheritance not only adds all public and protected methods of the superclass to 
 ## What Is an Interface?
 An interface is a contract between a class and the outside world. When a class implements an interface, it promises to provide the behavior published by that interface.
 
+### Functional interface
+An informative annotation type used to indicate that an interface type declaration is intended to be a functional interface as defined by the Java Language Specification. Conceptually, a functional interface has exactly one abstract method. Since default methods have an implementation, they are not abstract. If an interface declares an abstract method overriding one of the public methods of java. lang. Object, that also does not count toward the interface's abstract method count since any implementation of the interface will have an implementation from java. lang. Object or elsewhere.
+
+Note that instances of functional interfaces can be created with lambda expressions, method references, or constructor references.
+If a type is annotated with this annotation type, compilers are required to generate an error message unless:
+- The type is an interface type and not an annotation type, enum, or class.
+- The annotated type satisfies the requirements of a functional interface.
+
+
 ## What Is a Package?
 A package is a namespace for organizing classes and interfaces in a logical manner. Placing your code into packages makes large software projects easier to manage.
 
@@ -845,6 +854,12 @@ To successfully store and retrieve objects from a hashtable, the objects used as
 - **Properties**: The Properties class represents a persistent set of properties. The Properties can be saved to a stream or loaded from a stream. Each key and its corresponding value in the property list is a string.
 - **TreeMap**: A Red-Black tree based NavigableMap implementation. The map is sorted according to the natural ordering of its keys, or by a Comparator provided at map creation time, depending on which constructor is used.
 - **WeakHashMap**: Hash table based implementation of the Map interface, with weak keys. An entry in a WeakHashMap will automatically be removed when its key is no longer in ordinary use.
+
+
+# Streams
+A sequence of elements supporting sequential and parallel aggregate operations.
+To perform a computation, stream operations are composed into a stream pipeline. A stream pipeline consists of a source (which might be an array, a collection, a generator function, an I/ O channel, etc), zero or more intermediate operations (which transform a stream into another stream, such as filter(Predicate)), and a terminal operation (which produces a result or side-effect, such as count() or forEach(Consumer)). 
+Streams are lazy; computation on the source data is only performed when the terminal operation is initiated, and source elements are consumed only as needed.
 
 
 # Nested classes

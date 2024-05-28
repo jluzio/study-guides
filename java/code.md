@@ -19,6 +19,29 @@
   - n: line separator
 ~~~
 
+# Pattern
+- +: 1+
+- *: 0+
+- ?: 0 or 1
+- ^: start
+- $: end
+- X{n}: x exacly n times
+- X{n,m}: x n to m times
+- \<class>: class of values
+  - d: digit
+  - D: non-digit
+  - s: whitespace char
+  - S: non-whitespace char
+  - w: word char
+  - W
+  - t: tab
+  - n: new line
+- [abc]: a, b or c
+- [^abc]: not a, not b and not c
+- [a-z]: range
+- [a-z&&[def]]: union
+- [a-d[m-p]]: or. equals to [a-dm-p]
+
 # ArrayList vs LinkedList
 Key Difference Between ArrayList vs LinkedList ArrayList uses an array, which allows for fast random access but slow insertion and deletion. While LinkedList uses a doubly linked list, which allows for fast insertion and deletion but slow random access. Also one of the major difference lies in the access time.
 
