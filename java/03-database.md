@@ -183,10 +183,22 @@ RIGHT JOIN is similar to LEFT JOIN. This join returns all the rows of the table 
 FULL JOIN creates the result-set by combining results of both LEFT JOIN and RIGHT JOIN. The result-set will contain all the rows from both tables. For the rows for which there is no matching, the result-set will contain NULL values.
 
 
-## function vs procedure
+## Other topics
+
+### function vs procedure
 - Functions return a value and can be used in a SQL statement or function, can be used in select statement.
 - Procedures can have output parameters, but can only be used by EXECUTE, so it can't be used in a select statement for example.
 
 
-## truncate table
+### truncate table
 Deletes all records, but doesn't drop table. (may delete rollback history?) (may reset sequences?).
+
+
+### concurrency
+- transactions (use a isolation level that fits: read uncommitted, read committed, etc)
+- optimistic locking (version/timestamp field)
+- pessimistic locking
+- row-level locking
+- partitioning (multiple tables, distributed and handled seperatelly)
+- application logic
+  - queueing to serialize access to critical parts of the code
