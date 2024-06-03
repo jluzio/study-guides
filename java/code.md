@@ -42,6 +42,44 @@
 - [a-z&&[def]]: union
 - [a-d[m-p]]: or. equals to [a-dm-p]
 
+# DateTimeFormatter pattern
+- G: era (text / e.g.: AD; Anno Domini; A)
+- u: year (year / e.g.: 2004; 04)
+- y: year-of-era (year / e.g.: 2004; 04)
+- D: day-of-year (number / e.g.: 189)
+- M/L: month-of-year (number/ text / e.g.: 7; 07; Jul; July; J)
+- d: day-of-month (number / e.g.: 10)
+- g: modified-julian-day (number / e.g.: 2451334)
+- Q/q: quarter-of-year (number/ text / e.g.: 3; 03; Q3; 3rd quarter)
+- Y: week-based-year (year / e.g.: 1996; 96)
+- w: week-of-week-based-year (number / e.g.: 27)
+- W: week-of-month (number / e.g.: 4)
+- E: day-of-week (text / e.g.: Tue; Tuesday; T)
+- e/c: localized day-of-week (number/ text / e.g.: 2; 02; Tue; Tuesday; T)
+- F: aligned-week-of-month (number / e.g.: 3)
+- a: am-pm-of-day (text / e.g.: PM)
+- B: period-of-day (text / e.g.: in the morning)
+- h: clock-hour-of-am-pm (1-12) (number / e.g.: 12)
+- K: hour-of-am-pm (0-11) (number / e.g.: 0)
+- k: clock-hour-of-day (1-24) (number / e.g.: 24)
+- H: hour-of-day (0-23) (number / e.g.: 0)
+- m: minute-of-hour (number / e.g.: 30)
+- s: second-of-minute (number / e.g.: 55)
+- S: fraction-of-second (fraction / e.g.: 978)
+- A: milli-of-day (number / e.g.: 1234)
+- n: nano-of-second (number / e.g.: 987654321)
+- N: nano-of-day (number / e.g.: 1234000000)
+- V: time-zone ID (zone-id / e.g.: America/ Los_Angeles; Z; -08:30)
+- v: generic time-zone name (zone-name / e.g.: Pacific Time; PT)
+- z: time-zone name (zone-name / e.g.: Pacific Standard Time; PST)
+- O: localized zone-offset (offset-O / e.g.: GMT+8; GMT+08:00; UTC-08:00)
+- X: zone-offset 'Z' for zero (offset-X / e.g.: Z; -08; -0830; -08:30; -083015; -08:30:15)
+- x: zone-offset (offset-x / e.g.: +0000; -08; -0830; -08:30; -083015; -08:30:15)
+- Z: zone-offset (offset-Z / e.g.: +0000; -0800; -08:00)
+- p: pad next (pad modifier / e.g.: 1)
+- ': escape for text
+- '': single quote
+
 # ArrayList vs LinkedList
 Key Difference Between ArrayList vs LinkedList ArrayList uses an array, which allows for fast random access but slow insertion and deletion. While LinkedList uses a doubly linked list, which allows for fast insertion and deletion but slow random access. Also one of the major difference lies in the access time.
 

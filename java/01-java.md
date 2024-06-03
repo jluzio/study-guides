@@ -9,8 +9,19 @@ A class is a blueprint or prototype from which objects are created.
 (? Inheritance provides a powerful and natural mechanism for organizing and structuring your software.)  
 It is the mechanism by which one class is allowed to inherit the features (fields and methods) of another class. 
 That class is called a superclass, or parent class. The derived class is called subclass, or child class.
+
+Example:
+- Animal
+  - Cat
+  - Bird
+  - Person
+
 - Method overriding
 Inheritance not only adds all public and protected methods of the superclass to your subclass, but it also allows you to replace their implementation. The method of the subclass then overrides the one of the superclass. That mechanism is called polymorphism.
+
+- Composition vs Inheritance
+Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should favor polymorphic behavior and code reuse by their composition (by containing instances of other classes that implement the desired functionality) over inheritance from a base or parent class.
+Ideally all reuse can be achieved by assembling existing components, but in practice inheritance is often needed to make new ones. Therefore inheritance and object composition typically work hand-in-hand, as discussed in the book Design Patterns.
 
 ## What Is an Interface?
 An interface is a contract between a class and the outside world. When a class implements an interface, it promises to provide the behavior published by that interface.
