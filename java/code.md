@@ -33,7 +33,7 @@
   - s: whitespace char
   - S: non-whitespace char
   - w: word char
-  - W
+  - W: non-word char
   - t: tab
   - n: new line
 - [abc]: a, b or c
