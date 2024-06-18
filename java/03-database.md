@@ -202,3 +202,7 @@ Deletes all records, but doesn't drop table. (may delete rollback history?) (may
 - partitioning (multiple tables, distributed and handled seperatelly)
 - application logic
   - queueing to serialize access to critical parts of the code
+
+### NoSQL vs SQL
+NoSQL is preferred over SQL in many cases because it offers more flexibility and scalability.
+The primary benefit of using a NoSQL system is that it provides developers with the ability to store and access data quickly and easily, without the overhead of a traditional relational database.
