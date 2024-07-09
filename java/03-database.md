@@ -203,6 +203,56 @@ Deletes all records, but doesn't drop table. (may delete rollback history?) (may
 - application logic
   - queueing to serialize access to critical parts of the code
 
+
 ### NoSQL vs SQL
 NoSQL is preferred over SQL in many cases because it offers more flexibility and scalability.
 The primary benefit of using a NoSQL system is that it provides developers with the ability to store and access data quickly and easily, without the overhead of a traditional relational database.
+
+
+### Pagination
+#### Offset and Limit Pagination
+The single most important concept to understand when it comes to pagination in (Postgres) databases is the use of LIMIT and OFFSET clauses.
+
+LIMIT specifies the maximum number of rows to be returned by a query, while OFFSET specifies the number of rows to skip before returning rows from the query result set.
+
+Here's a simple example:
+~~~sql
+SELECT * FROM users ORDER BY id LIMIT 10 OFFSET 0;
+~~~
+
+Beyond getting consistently slower, or rather, because it gets consistently slower, this pagination technique can lead to consistent results with concurrent updates. The results may be inconsistent or missing if the underlying data is modified (e.g., rows inserted, updated, or deleted) between consecutive paginated queries.
+
+Consider the following scenario:
+~~~sql
+Query 1: SELECT * FROM users ORDER BY id LIMIT 10 OFFSET 0;
+Query 2: SELECT * FROM users ORDER BY id LIMIT 10 OFFSET 10;
+~~~
+
+If a new row is inserted or an existing row is deleted between these two queries, the second query may return unexpected results. Rows might be duplicated or skipped entirely.
+
+This approach can also be inefficient with large result sets. When using LIMIT and OFFSET for pagination, the database still needs to generate the entire result set, even if only a small portion is returned to the application. This can be inefficient, especially for queries with complex joins or large result sets.
+
+#### Cursor-based pagination
+Cursor-based pagination relies on using a unique identifier or a timestamp of the last retrieved record as a reference point for fetching the next page of results. Instead of using OFFSET, you keep track of the previous retrieved record and use its identifier or timestamp in the WHERE clause to fetch the next set of records.
+
+~~~sql
+-- Fetch the first page
+SELECT * FROM users WHERE id > 0 ORDER BY id LIMIT 10;
+
+-- Fetch the next page
+SELECT * FROM users WHERE id > <last_id_from_previous_page> ORDER BY id LIMIT 10;
+~~~
+
+#### Keyset pagination
+Keyset pagination takes cursor-based pagination a step further by using a combination of columns to identify each record uniquely. Typically, the columns used for keyset pagination include the primary key and a timestamp or a monotonically increasing value.
+
+~~~sql
+-- Fetch the first page
+SELECT * FROM users ORDER BY id, created_at LIMIT 10;
+
+-- Fetch the next page
+SELECT * FROM users
+WHERE (id, created_at) > (<last_id_from_previous_page>, <last_timestamp_from_previous_page>)
+ORDER BY id, created_at
+LIMIT 10;
+~~~
