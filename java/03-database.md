@@ -302,3 +302,51 @@ Readyset offers several benefits for cache-aware pagination:
 - Automatic caching: Readyset caches the results of paginated queries without requiring changes to your application code.
 - Incremental updates: Readyset efficiently updates the cached data as the underlying database changes, ensuring data consistency.
 - Seamless integration: Readyset is wire-compatible with Postgres, so you only need to switch out your connection string to start using Readyset in your application—no code changes required.
+
+
+#### Notes
+- Indexes: consider use indexes for the paging params and query params.
+
+
+#### "Advanced Techniques"
+1. Window Functions
+Use window functions to provide more advanced pagination capabilities, such as total row count alongside the paginated results.
+SELECT * FROM (
+  SELECT
+    data_table.*,
+    ROW_NUMBER() OVER (ORDER BY timestamp DESC) as row_num
+  FROM data_table
+) AS subquery
+WHERE row_num BETWEEN :start AND :end;
+
+Memory and Performance Considerations:
+- Window functions can be resource-intensive but are useful for cases where you need additional metadata about the results.
+- Ensure proper indexing and consider database-specific optimizations to handle window functions efficiently.
+
+2. Caching
+Implement caching mechanisms to store frequently accessed pages, reducing the need to repeatedly query the database for the same data.
+
+~~~js
+import redis
+
+cache = redis.Redis(host='localhost', port=6379)
+
+def fetch_page(page_number, page_size):
+    cache_key = f"page_{page_number}"
+    cached_page = cache.get(cache_key)
+    if cached_page:
+        return json.loads(cached_page)
+
+    # Calculate offset for LIMIT and OFFSET pagination
+    offset = (page_number - 1) * page_size
+    query = f"SELECT * FROM data_table ORDER BY timestamp DESC LIMIT {page_size} OFFSET {offset}"
+    result = execute_query(query)
+
+    # Cache the result
+    cache.set(cache_key, json.dumps(result), ex=60)  # Cache for 60 seconds
+    return result
+~~~
+
+Memory and Performance Considerations:
+- Caching reduces the load on the database and improves response times for frequently accessed pages.
+- Cache expiration policies should be designed based on the data update frequency to ensure data freshness.
