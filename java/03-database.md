@@ -210,8 +210,11 @@ The primary benefit of using a NoSQL system is that it provides developers with 
 
 
 ### Pagination
+Example for Postgres.
+https://readyset.io/blog/optimizing-sql-pagination-in-postgres
+
 #### Offset and Limit Pagination
-The single most important concept to understand when it comes to pagination in (Postgres) databases is the use of LIMIT and OFFSET clauses.
+The single most important concept to understand when it comes to pagination in Postgres databases is the use of LIMIT and OFFSET clauses.
 
 LIMIT specifies the maximum number of rows to be returned by a query, while OFFSET specifies the number of rows to skip before returning rows from the query result set.
 
@@ -256,3 +259,30 @@ WHERE (id, created_at) > (<last_id_from_previous_page>, <last_timestamp_from_pre
 ORDER BY id, created_at
 LIMIT 10;
 ~~~
+
+#### Materialized Views
+Materialized views are a robust caching mechanism in Postgres. They allow you to store the result of a complex query as a separate table. Materialized views are particularly useful for caching paginated results of queries that involve expensive joins, aggregations, or complex filtering.
+
+To create a materialized view for a paginated query:
+~~~sql
+CREATE MATERIALIZED VIEW paginated_users AS
+SELECT * FROM users ORDER BY id LIMIT 1000;
+~~~
+
+This materialized view caches the first 1000 rows of the users table, ordered by the id column. Subsequent pagination queries can retrieve data from this materialized view instead of querying the main table.
+
+To refresh the materialized view with the latest data:
+
+~~~sql
+REFRESH MATERIALIZED VIEW paginated_users;
+~~~
+
+#### Extensions (if aplicable)
+Example for Readyset in Postgres.
+
+Readyset is a caching engine that integrates seamlessly with Postgres. It sits between your application and the database as a distributed caching layer. Readyset automatically caches the results of paginated queries and keeps the cached data up to date with the underlying database.
+
+Readyset offers several benefits for cache-aware pagination:
+- Automatic caching: Readyset caches the results of paginated queries without requiring changes to your application code.
+- Incremental updates: Readyset efficiently updates the cached data as the underlying database changes, ensuring data consistency.
+- Seamless integration: Readyset is wire-compatible with Postgres, so you only need to switch out your connection string to start using Readyset in your application—no code changes required.
