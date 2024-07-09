@@ -246,6 +246,18 @@ SELECT * FROM users WHERE id > 0 ORDER BY id LIMIT 10;
 SELECT * FROM users WHERE id > <last_id_from_previous_page> ORDER BY id LIMIT 10;
 ~~~
 
+Cursor-based pagination is more efficient than offset-based pagination because it avoids the need to scan and discard rows. Instead, it directly jumps to the next set of records based on the cursor value. This approach remains efficient even for large offsets because the database can quickly use an index on the cursor column to locate the starting point.
+
+It also produces stable results. Cursor-based pagination provides stable results even if new records are inserted or deleted between page requests. Each page contains the expected set of records based on the cursor value.
+
+Using cursor-based pagination, you should also see reduced database load. By avoiding the need to scan and discard records, cursor-based pagination reduces the database load and resource consumption compared to offset-based pagination.
+
+There are considerations when implementing cursor-based pagination:
+- Cursor stability: The cursor column must be unique and immutable. If the cursor value changes between page requests (e.g., due to updates), it can lead to inconsistent results.
+- Sorting requirements: Cursor-based pagination relies on a specific sorting order to determine the next set of records. Ensure the query includes an appropriate ORDER BY clause based on the cursor column.
+- Application-side tracking: The application needs to keep track of the cursor value for each page and use it to construct the subsequent queries. This adds some complexity to the application code.
+- Deleted records: If records are deleted between page requests, cursor-based pagination may result in gaps in the paginated results. The page size may be less than the expected number of records.
+
 #### Keyset pagination
 Keyset pagination takes cursor-based pagination a step further by using a combination of columns to identify each record uniquely. Typically, the columns used for keyset pagination include the primary key and a timestamp or a monotonically increasing value.
 
@@ -259,6 +271,10 @@ WHERE (id, created_at) > (<last_id_from_previous_page>, <last_timestamp_from_pre
 ORDER BY id, created_at
 LIMIT 10;
 ~~~
+
+Here, we use the combination of id and created_at columns as the keyset. For the first page, we fetch the records ordered by id and created_at and limit the result to 10 rows. For subsequent pages, we use the id and created_at values of the last retrieved record from the previous page as the starting point and fetch the next set of records.
+
+Keyset pagination ensures stable and consistent results even if new records are inserted, or existing records are modified between page requests. It guarantees that each record is uniquely identified and avoids the problem of skipped or duplicated records that can occur with offset-based pagination. However, we can’t jump to a specific page–we only have the option of going to the next page of results.
 
 #### Materialized Views
 Materialized views are a robust caching mechanism in Postgres. They allow you to store the result of a complex query as a separate table. Materialized views are particularly useful for caching paginated results of queries that involve expensive joins, aggregations, or complex filtering.
