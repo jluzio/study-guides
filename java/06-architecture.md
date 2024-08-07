@@ -1,4 +1,4 @@
-# Design patterns for microservices
+## Design patterns for microservices
 Design patterns for microservices provide best practices and solutions for common challenges in building and maintaining microservices architectures. Here are some key design patterns:
 
 ### 1. **Decomposition Patterns**
@@ -51,7 +51,7 @@ Design patterns for microservices provide best practices and solutions for commo
 Implementing these patterns can help address the complexity and challenges of building robust, scalable, and maintainable microservices architectures.
 
 
-### SOLID Principles:
+## SOLID Principles:
 
 1. **Single Responsibility Principle (SRP)**
    - **Definition:** A class should have only one reason to change, meaning it should have only one job or responsibility.
