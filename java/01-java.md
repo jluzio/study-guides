@@ -718,7 +718,7 @@ ExecutorService also provides methods for submitting large collections of Callab
   - ScheduledExecutorService, a subinterface of ExecutorService, supports future and/or periodic execution of tasks.
 The ScheduledExecutorService interface supplements the methods of its parent ExecutorService with schedule, which executes a Runnable or Callable task after a specified delay. In addition, the interface defines scheduleAtFixedRate and scheduleWithFixedDelay, which executes specified tasks repeatedly, at defined intervals.
 
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        ExecutorService executorService = Executors.newScheduledThreadPool(5);
 
 - Thread Pools
 

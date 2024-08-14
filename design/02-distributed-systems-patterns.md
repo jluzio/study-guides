@@ -1,3 +1,5 @@
+https://microservices.io/patterns/index.html
+
 # Design patterns for microservices
 Design patterns for microservices provide best practices and solutions for common challenges in building and maintaining microservices architectures. Here are some key design patterns:
 
@@ -9,6 +11,7 @@ Design patterns for microservices provide best practices and solutions for commo
    - **Database per Service**: Each service manages its own database, ensuring decoupling.
    - **Shared Database**: Multiple services share a single database, which can simplify management but reduce decoupling.
    - **Saga**: Manages distributed transactions by using a sequence of local transactions.
+   - **Command Query Responsibility Segregation (CQRS)**: Separates read and write operations to optimize handling and scalability.
 
 ### 3. **Communication Patterns**
    - **API Gateway**: Acts as a single entry point for all client requests, handling routing, authentication, and other concerns.

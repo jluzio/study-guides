@@ -3,54 +3,79 @@ https://refactoring.guru/design-patterns/java
 
 ## Creational
 Creational patterns are ones that create objects, rather than having to instantiate objects directly. This gives the program more flexibility in deciding which objects need to be created for a given case.
- - Abstract factory groups object factories that have a common theme.
+ - **Abstract factory**: groups object factories that have a common theme.
 
- - Builder constructs complex objects by separating construction and representation.
+ - **Builder**: constructs complex objects by separating construction and representation.
 
- - Factory method creates objects without specifying the exact class to create.
+ - **Factory**: method creates objects without specifying the exact class to create.
 
- - Prototype creates objects by cloning an existing object.
+ - **Prototype**: creates objects by cloning an existing object.
 
- - Singleton restricts object creation for a class to only one instance.
+ - **Singleton**: restricts object creation for a class to only one instance.
 
 # Structural
 These concern class and object composition. They use inheritance to compose interfaces and define ways to compose objects to obtain new functionality.
- - Adapter allows classes with incompatible interfaces to work together by wrapping its own interface around that of an already existing class.
+ - **Adapter**: allows classes with incompatible interfaces to work together by wrapping its own interface around that of an already existing class.
 
- - Bridge decouples an abstraction from its implementation so that the two can vary independently.
+ - **Bridge**: decouples an abstraction from its implementation so that the two can vary independently.
  ```java
- // Logger has two implementations: info and warning
- @FunctionalInterface
- interface Logger {
-     void log(String message);
+/*
+Key Components:
+ - Abstraction: Shape
+ - Refined Abstraction: Specific shapes like Circle and Square
+ - Implementor: Color
+ - Concrete Implementors: Specific colors like Red and Blue
+*/
 
-     static Logger info() {
-         return message -> System.out.println("info: " + message);
-     }
-     static Logger warning() {
-         return message -> System.out.println("warning: " + message);
-     }
- }
+  public interface Color {
+    void applyColor();
+  }
 
- abstract class AbstractAccount {
-     private Logger logger = Logger.info();
+  // Abstraction
+  public abstract class Shape {
+    //Composition - implementor
+    protected Color color;
 
-     public void setLogger(Logger logger) {
-         this.logger = logger;
-     }
+    //constructor with implementor as input argument
+    public Shape(Color c) {
+      this.color = c;
+    }
 
-     // the logging part is delegated to the Logger implementation
-     protected void operate(String message, boolean result) {
-         logger.log(message + " result " + result);
-     }
- }
+    abstract public void applyColor();
+  }
+
+  // Refined abstraction
+  public class Triangle extends Shape {
+
+    public Triangle(Color c) {
+      super(c);
+    }
+
+    @Override
+    public void applyColor() {
+      System.out.print("Triangle filled with color ");
+      color.applyColor();
+    }
+  }
+  public class Square extends Shape {
+    ...
+  }
+  
+  public class RedColor implements Color {
+    public void applyColor() {
+      System.out.println("red.");
+    }
+  }
+  public class BlueColor implements Color {
+    ... 
+  }
  ```
 
- - Composite composes zero-or-more similar objects so that they can be manipulated as one object.
+ - **Composite**: composes zero-or-more similar objects so that they can be manipulated as one object.
 
- - Decorator dynamically adds/overrides behaviour in an existing method of an object.
+ - **Decorator**: dynamically adds/overrides behaviour in an existing method of an object.
  ```java
- // abstract decorator class - note that it implements Window
+ // abstract decorator class - **note**: that it implements Window
  abstract class WindowDecorator implements Window {
      private final Window windowToBeDecorated; // the Window being decorated
 
@@ -112,9 +137,9 @@ These concern class and object composition. They use inheritance to compose inte
  }
  ```
 
- - Facade provides a simplified interface to a large body of code.
+ - **Facade**: provides a simplified interface to a large body of code.
 
- - Flyweight reduces the cost of creating and manipulating a large number of similar objects.
+ - **Flyweight**: reduces the cost of creating and manipulating a large number of similar objects.
 ```c#
  // Defines Flyweight object that repeats itself.
 public class Flyweight
@@ -144,33 +169,33 @@ public class MyObject
 }
 ```
 
- - Proxy provides a placeholder for another object to control access, reduce cost, and reduce complexity.
+ - **Proxy**: provides a placeholder for another object to control access, reduce cost, and reduce complexity.
 
 Example: cache, lazy loading
 
 ## Behavioral
 Most of these design patterns are specifically concerned with communication between objects.
- - Chain of responsibility delegates commands to a chain of processing objects.
+ - **Chain of responsibility**: delegates commands to a chain of processing objects.
 
- - Command creates objects that encapsulate actions and parameters.
+ - **Command**: creates objects that encapsulate actions and parameters.
 
- - Interpreter implements a specialized language.
+ - **Interpreter**: implements a specialized language.
 
- - Iterator accesses the elements of an object sequentially without exposing its underlying representation.
+ - **Iterator**: accesses the elements of an object sequentially without exposing its underlying representation.
 
- - Mediator allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
+ - **Mediator**: allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
 
- - Memento provides the ability to restore an object to its previous state (undo).
+ - **Memento**: provides the ability to restore an object to its previous state (undo).
 
- - Observer is a publish/subscribe pattern, which allows a number of observer objects to see an event.
+ - **Observer**: is a publish/subscribe pattern, which allows a number of observer objects to see an event.
 
- - State allows an object to alter its behavior when its internal state changes.
+ - **State**: allows an object to alter its behavior when its internal state changes.
 
- - Strategy allows one of a family of algorithms to be selected on-the-fly at runtime.
+ - **Strategy**: allows one of a family of algorithms to be selected on-the-fly at runtime.
 
- - Template method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
+ - **Template**: method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
 
- - Visitor separates an algorithm from an object structure by moving the hierarchy of methods into one object.
+ - **Visitor**: separates an algorithm from an object structure by moving the hierarchy of methods into one object.
 
 
 # SOLID Principles:
